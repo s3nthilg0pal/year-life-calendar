@@ -56,13 +56,20 @@ function inlineSvgColors(svg) {
     .replace(/var\(--ringW\)/g, "3px");
 }
 
+function toLocalDateString(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url ?? "/", `http://${req.headers.host ?? "localhost"}`);
     const now = new Date();
 
-    const year = toInt(url.searchParams.get("year"), now.getUTCFullYear());
-    const todayStr = url.searchParams.get("today") ?? now.toISOString().slice(0, 10);
+    const year = toInt(url.searchParams.get("year"), now.getFullYear());
+    const todayStr = url.searchParams.get("today") ?? toLocalDateString(now);
 
     const width = clamp(toInt(url.searchParams.get("width"), 1179), 320, 4096);
     const height = clamp(toInt(url.searchParams.get("height"), 2556), 320, 8192);
