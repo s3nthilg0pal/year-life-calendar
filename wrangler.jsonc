@@ -1,6 +1,6 @@
 {
   "$schema": "https://developers.cloudflare.com/wrangler/schema.json",
-  "name": "year-wallpaper",
+  "name": "year-life-calendar",
   "main": "worker.mjs",
   "compatibility_date": "2026-01-18",
   "rules": [
