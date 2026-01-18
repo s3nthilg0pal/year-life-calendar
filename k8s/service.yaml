@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: year-calendar
+  namespace: year-calendar
+  labels:
+    app: year-calendar
+spec:
+  type: LoadBalancer
+  selector:
+    app: year-calendar
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: year-calendar
+  namespace: year-calendar
+  labels:
+    app: year-calendar
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: year-calendar
+  template:
+    metadata:
+      labels:
+        app: year-calendar
+    spec:
+      containers:
+        - name: year-calendar
+          image:  ghcr.io/s3nthilg0pal/year-life-calendar:main
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 3
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
